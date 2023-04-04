@@ -1,24 +1,21 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { postAdd } from "./postsSlice";
+import { addNewPost } from "./postsSlice";
 import { selectAllUsers } from "../users/usersSlice";
 
 
 export const AddPostForm = () => {
-    
-
-      
     const [title,setTitle]=useState("")
-    const [content,setContent]=useState("")
+    const [body,setBody]=useState("")
     const [userId,setUserId]=useState("")
-
+    const [addRequestStatus,setAddRequestStatus]=useState("idle")
     const users=useSelector(selectAllUsers)
     
     const onTitleChanged=e=>setTitle(e.target.value)
-    const onContentChanged=e=>setContent(e.target.value)
+    const onBodyChanged=e=>setBody(e.target.value)
     const onAuthorChange=e=>setUserId(e.target.value)
-
+    
     const dispatch=useDispatch()
     
     const usersOptions=users.map(user=>(
@@ -31,11 +28,16 @@ export const AddPostForm = () => {
             <h2>Add a New Post</h2>
             <form onSubmit={(e)=>{
                 e.preventDefault()
-                if(title&&content&&userId){
-                    
-                    dispatch(postAdd(title,content,userId))
+                console.log(title,body,userId)
+                try{
+                    setAddRequestStatus("pending")
+                    dispatch(addNewPost({title,body,userId}))
                     setTitle("")
-                    setContent("")
+                    setBody("")
+                }catch(err){
+
+                }finally{
+                    setAddRequestStatus("idle")
                 }
                 }}>
                 <label htmlFor="postAuthor">Author:</label>
@@ -52,15 +54,15 @@ export const AddPostForm = () => {
                     onChange={onTitleChanged}
                 />
                 <br/>
-                <label htmlFor="postContent">Post Content:</label>
+                <label htmlFor="postBody">Post Body:</label>
                 <textarea
                     id="postContent"
-                    name="postContent"
-                    value={content}
-                    onChange={onContentChanged}
+                    name="postBody"
+                    value={body}
+                    onChange={onBodyChanged}
                 />
                 <br/>
-                <button type="submit">Save Post</button>
+                <button type="submit" disabled={(addRequestStatus==="idle"&&title&&body&&userId)?false:true}>Save Post</button>
             </form>
     </section>
   )
