@@ -40,7 +40,6 @@ const PostsList = () => {
       
   return (
     <>
-      <h2 className="postsHeader">Posts</h2>
       <section className="posts">
           {content}
       </section>
