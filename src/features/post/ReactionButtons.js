@@ -24,7 +24,7 @@ const ReactionButtons = ({post}) => {
                 onClick={
                     ()=>{
                         dispatch(reactionAdd({postId:post.id,reaction:name}))
-                        console.log(post)
+                        
                     } 
                 }
                 >

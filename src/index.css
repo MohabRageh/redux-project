@@ -108,8 +108,21 @@ header a{
   top:0;
   left:10;
 }
-.editPost a{
+.editPost a,
+.deletePost button{
   color: white;
   font-size: 3rem;
   text-decoration: none;
+  background-color: #ffffff00;
+  border: none;
+}
+.editPost a:hover,
+.deletePost button:hover{
+  cursor: pointer;
+  color: #000;
+}
+.deletePost{
+  position: absolute;
+  top:0;
+  left: 90%;
 }

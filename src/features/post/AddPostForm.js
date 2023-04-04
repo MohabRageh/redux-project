@@ -28,7 +28,7 @@ export const AddPostForm = () => {
             <h2>Add a New Post</h2>
             <form onSubmit={(e)=>{
                 e.preventDefault()
-                console.log(title,body,userId)
+                
                 try{
                     setAddRequestStatus("pending")
                     dispatch(addNewPost({title,body,userId}))

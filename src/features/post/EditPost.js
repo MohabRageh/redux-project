@@ -7,7 +7,7 @@ import React from 'react'
 
 export default function EditPost() {
     const {postId}=useParams()
-    console.log(postId)
+    
     const navigate=useNavigate()
     const dispatch=useDispatch()
 
@@ -26,7 +26,7 @@ export default function EditPost() {
             <h2>EditPost</h2>
             <form onSubmit={(e)=>{
                 e.preventDefault()
-                console.log(title,body,userId)
+                
                 try{
                     setRequestState("pending")
                     dispatch(updatePost({id:post.id,title,body,userId,reactions:post.reactions}))

@@ -19,13 +19,24 @@ export const updatePost=createAsyncThunk("posts/updatePost",async(initialPost)=>
         return err.message
     }
 })
+export const deletePost=createAsyncThunk("posts/delete",(async({postId})=>{
+    
+    try{
+        const response=await axios.delete(`${POSTS_URL}/${postId}`)
+        if(response?.status===200)return postId
+        return `${response.status}: ${response.statusText}`
+    }catch(err){
+        return err.message
+    }
+}))
+
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     const response = await axios.get(POSTS_URL)
     return response.data
 })
 export const addNewPost=createAsyncThunk("posts/addNewPost",async(initialPost)=>{
     try{
-        console.log(initialPost)
+        
         const response=await axios.post(POSTS_URL,{...initialPost})
         return response.data
     }catch(err){
@@ -40,7 +51,7 @@ const postsSlice = createSlice({
             const {postId,reaction}=action.payload
             
             const post =state.posts.find(post=>post.id===postId)
-            console.log(postId,reaction,post.id)
+            
             //first time to know that you can reach the object keys like that
             post.reactions[reaction]++
         },
@@ -106,19 +117,29 @@ const postsSlice = createSlice({
                     rocket: 0,
                     coffee: 0
                 }
-                console.log(action.payload)
+                
                 state.posts.push(action.payload)
             })
             .addCase(updatePost.fulfilled,(state,action)=>{
                 if(!action.payload?.id){
-                    console.log("update faield")
-                    console.log(action.payload)
                     return
                 }
                 const {id}=action.payload
                 action.payload.date=new Date().toISOString()
                 const posts=state.posts.filter(post=>post.id!==id)
                 state.posts=[...posts,action.payload]
+            })
+            .addCase(deletePost.fulfilled,(state,action)=>{
+                
+                if(!action.payload){
+                    
+                    return
+                }
+                const id=action.payload
+                
+                const posts=state.posts.filter(post=>post.id!==Number(id))
+                state.posts=posts
+
             })
         }
 })
