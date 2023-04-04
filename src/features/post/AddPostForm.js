@@ -6,6 +6,9 @@ import { selectAllUsers } from "../users/usersSlice";
 
 
 export const AddPostForm = () => {
+    
+
+      
     const [title,setTitle]=useState("")
     const [content,setContent]=useState("")
     const [userId,setUserId]=useState("")
@@ -17,7 +20,7 @@ export const AddPostForm = () => {
     const onAuthorChange=e=>setUserId(e.target.value)
 
     const dispatch=useDispatch()
-    console.log(users.length)
+    
     const usersOptions=users.map(user=>(
         <option key={user.id} value={user.id}>
             {user.name}
@@ -29,6 +32,7 @@ export const AddPostForm = () => {
             <form onSubmit={(e)=>{
                 e.preventDefault()
                 if(title&&content&&userId){
+                    
                     dispatch(postAdd(title,content,userId))
                     setTitle("")
                     setContent("")

@@ -56,4 +56,25 @@ h5{
   margin-bottom: 30px;
 
 }
-
+.posts{
+  margin-top: 0;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.postsHeader{
+  margin-top: 50px;
+  display: grid;
+  place-content: center;
+}
+.reactions{
+  display: flex;
+  
+}
+.reactionButton{
+  background-color: #ffffff00;
+  border: none;
+  color: white;
+}
+.postContent{
+  white-space: pre-line;
+}
